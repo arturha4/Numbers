@@ -1,3 +1,5 @@
+import datetime
+
 import psycopg2
 
 from apis import get_usd_course, get_google_sheet_data
@@ -49,7 +51,7 @@ def create_orders_table(cursor):
 def create_order(cursor, *args):
     cursor.execute(
         """INSERT INTO orders
-        VALUES (DEFAULT,%s,%s,DATE %s,%s);""", args
+        VALUES (DEFAULT,%s,%s,%s,%s);""", args
     )
 
 
@@ -78,6 +80,6 @@ def get_orders_from_db():
 def create_orders_from_sheet_data():
     usd_course = get_usd_course()
     for item in get_google_sheet_data():
-        create_order(item[0], item[1], item[2], item[1] * usd_course)
+        create_order(item[0], item[1], datetime.datetime.strptime(item[2], "%d.%m.%Y"), item[1] * usd_course)
 
 
