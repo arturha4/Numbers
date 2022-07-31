@@ -1,0 +1,31 @@
+version: "3"
+services:
+  database:
+    image: postgres:14.3-alpine
+    ports:
+      - "5432:5432"
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_DB: numbers_db
+  server:
+    build:
+      context: ./
+      dockerfile: server/Dockerfile
+    restart: always
+    container_name: server
+    command: python server/run.py
+    network_mode: host
+  client:
+    build:
+      context: ./
+      dockerfile: client/Dockerfile
+    restart: always
+    container_name: client
+    command: python client/web.py
+    ports:
+      - "5000:5000"
+    depends_on:
+      - server
+

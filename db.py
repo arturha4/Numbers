@@ -1,8 +1,6 @@
-import datetime
-import pandas
 import psycopg2
 
-from app.apis import get_usd_course, get_google_sheet_data
+from apis import get_usd_course, get_google_sheet_data
 from cfg import *
 
 
@@ -51,7 +49,7 @@ def create_orders_table(cursor):
 def create_order(cursor, *args):
     cursor.execute(
         """INSERT INTO orders
-        VALUES (DEFAULT,%s,%s,%s,%s);""", args
+        VALUES (DEFAULT,%s,%s,DATE %s,%s);""", args
     )
 
 
@@ -83,11 +81,3 @@ def create_orders_from_sheet_data():
         create_order(item[0], item[1], item[2], item[1] * usd_course)
 
 
-def orders_to_dataframe(data):
-    return pandas.DataFrame.from_dict({
-        "№": [i for i in range(1, len(data) + 1)],
-        "Номер поставки": [item[1] for item in data],
-        "Цена в $": [str(item[2]) for item in data],
-        "Цена в ₽": [str(item[4]) for item in data],
-        "Дата поставки": [datetime.datetime.strftime(item[3], "%d.%m.%y") for item in data],
-    })

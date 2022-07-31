@@ -12,7 +12,7 @@ def get_google_sheet_data():
     Получает данные с google-таблицы
     :return: вложенный лист с [номер заказа, цена в $, дата прибытия]
     """
-    CREDENTIALS_FILE = '../keys.json'
+    CREDENTIALS_FILE = 'google_keys.json'
     spreadsheet_id = cfg.SPREADSHEET_ID
     credentials = ServiceAccountCredentials.from_json_keyfile_name(
         CREDENTIALS_FILE,

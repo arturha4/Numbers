@@ -1,6 +1,6 @@
-DB_NAME='test_case_db'
+DB_NAME='numbers_db'
 USER='postgres'
-PASSWORD="ghghrfth"
+PASSWORD="postgres"
 HOST="localhost"
 SPREADSHEET_ID='1Xtks4E1uXEFdrkpovrYc5VLBPvxuopl4KE_drQevavk'
 USD_COURSE=None
