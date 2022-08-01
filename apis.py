@@ -12,7 +12,7 @@ def get_google_sheet_data():
     Получает данные с google-таблицы
     :return: вложенный лист с [номер заказа, цена в $, дата прибытия]
     """
-    CREDENTIALS_FILE = '../keys.json'
+    CREDENTIALS_FILE = 'google_keys.json'
     spreadsheet_id = cfg.SPREADSHEET_ID
     credentials = ServiceAccountCredentials.from_json_keyfile_name(
         CREDENTIALS_FILE,
@@ -22,7 +22,7 @@ def get_google_sheet_data():
     service = apiclient.discovery.build('sheets', 'v4', http=httpAuth)
     values = service.spreadsheets().values().get(
         spreadsheetId=spreadsheet_id,
-        range='A2:D51',
+        range='A2:D50',
         majorDimension='ROWS'
     ).execute()
     return [[item[1], float(item[2]), item[3]] for item in values['values']]
